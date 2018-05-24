@@ -113,6 +113,26 @@ app.post('/user', (req, res) => {
 	});
 });
 
+app.post('/user/login', (req, res) => {
+	let body = _.pick(req.body, ['email', 'password']);
+
+	User.findByCredentials(body.email, body.password).then((user) => {
+		return user.generateAuthToken().then((token) => {
+			res.header('x-auth', token).send(user);
+		});
+	}).catch(() => {
+		res.status(400).send();
+	});
+});
+
+app.delete('/user/me/token', authenticate, (req, res) => {
+	req.user.removeToken(req.token).then(() => {
+		res.status(200).send();
+	}).catch(() => {
+		res.status(400).send();
+	});
+});
+
 app.get('/user/me', authenticate, (req, res) => {
 	res.send(req.user);
 });
