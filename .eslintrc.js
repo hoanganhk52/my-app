@@ -1,9 +1,12 @@
 module.exports = {
     "env": {
-        "browser": true,
         "commonjs": true,
-        "es6": true
+        "es6": true,
+	    "mocha": true
     },
+	"plugins": [
+		"mocha"
+	],
     "extends": "eslint:recommended",
     "parserOptions": {
         "sourceType": "module"
@@ -24,6 +27,7 @@ module.exports = {
         "semi": [
             "error",
             "always"
-        ]
+        ],
+	    "mocha/no-exclusive-tests": "error"
     }
 };
