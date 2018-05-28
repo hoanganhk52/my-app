@@ -1,3 +1,4 @@
+require('./config/config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
@@ -15,6 +16,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 app.post('/todos', authenticate, (req, res) => {
+	console.log(req.user);
 	let todo = new Todo({
 		text: req.body.text,
 		_creator: req.user._id
@@ -101,8 +103,8 @@ app.patch('/todos/:id', authenticate, (req, res) => {
 
 		res.send({todo});
 	}).catch((e) => {
-		res.status(400).send();
-	})
+		res.status(400).send(e);
+	});
 });
 
 app.post('/user', (req, res) => {
