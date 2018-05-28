@@ -16,7 +16,6 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 app.post('/todos', authenticate, (req, res) => {
-	console.log(req.user);
 	let todo = new Todo({
 		text: req.body.text,
 		_creator: req.user._id
@@ -149,4 +148,4 @@ app.listen(port, () => {
 	console.log('Server is up on port: ' + port);
 });
 
-
+module.exports = {app};
